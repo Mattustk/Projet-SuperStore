@@ -10,8 +10,8 @@ import pandas as pd
 # ==========================================
 # 1. CONEXÃO COM SQL SERVER
 # ==========================================
-server = 'DESKTOP-OKQHC3S'  
-database = 'SuperStore'     
+server = '___________'  
+database = '_____'     
 
 conn_str = (
     f"DRIVER={{ODBC Driver 17 for SQL Server}};"
