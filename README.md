@@ -7,7 +7,7 @@
 ## 📌 Sobre o Projeto
 
 
- ** LINK DO DATASET ORIGINAL: https://www.kaggle.com/datasets/vivek468/superstore-dataset-final **
+ **LINK DO DATASET ORIGINAL: https://www.kaggle.com/datasets/vivek468/superstore-dataset-final**
 
 Este projeto tem como objetivo transformar dados brutos de vendas do SuperStore em um **modelo dimensional (star schema)**, aplicando conceitos fundamentais de engenharia de dados:
 
