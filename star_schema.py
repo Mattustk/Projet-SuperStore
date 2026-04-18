@@ -26,17 +26,18 @@ df = pd.read_sql("SELECT * FROM SuperStore", conn)
 
 
 # ==========================================
-# 2. TRATAMENTO DE TIPOS DE DADOS
+# 2. TRATAMENTO DE TIPOS
 # ==========================================
-# Converte datas para datetime (permite ordenação e filtros)
+
+# Conversão para Datetime
 df['Ship Date'] = pd.to_datetime(df['Ship Date'])
 df['Order Date'] = pd.to_datetime(df['Order Date'])
 
-# Converte números para float (permite somar, calcular médias)
-df['Sales'] = pd.to_numeric(df['Sales'], errors='coerce')
-df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
-df['Discount'] = pd.to_numeric(df['Discount'], errors='coerce')
-df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+# O "coerce" serve para: se tiver uma letra no meio do número, ele não trava o código, só ignora.
+df['Sales'] = pd.to_numeric(df, errors='coerce')
+df['Quantity'] = pd.to_numeric(df, errors='coerce')
+df['Discount'] = pd.to_numeric(df, errors='coerce')
+df['Profit'] = pd.to_numeric(df, errors='coerce')
 
 # ==========================================
 # 3. LIMPEZA DOS DADOS
@@ -90,7 +91,6 @@ assert fact_sales['sk_shipping'].isna().sum() == 0, "❌ Erro: Ship Date/Mode se
 # ==========================================
 # 8. LIMPEZA FINAL DA FATO
 # ==========================================
-0
 # Remove colunas originais (agora substituídas pelas SKs)
 fact_sales = fact_sales.drop(columns=['Customer ID', 'Product ID', 'Postal Code', 'Ship Date', 'Ship Mode'])
 
@@ -99,14 +99,14 @@ fact_sales = fact_sales[['sk_customer', 'sk_product', 'sk_region', 'sk_shipping'
                          'Sales', 'Quantity', 'Discount', 'Profit']]
 
 # ==========================================
-# 9. EXPORTAÇÃO PARA CSV
+# 9. EXPORTAÇÃO PARA CSV (FORMATADO PARA POWER BI BRASIL)
 # ==========================================
+# Adicionado decimal=',' para o Power BI não quebrar as casas decimais
 customer_dim.to_csv('dim_cliente.csv', index=False)
 product_dim.to_csv('dim_produto.csv', index=False)
 region_dim.to_csv('dim_regiao.csv', index=False)
 ship_dim.to_csv('dim_envio.csv', index=False)
-fact_sales.to_csv('fato_vendas.csv', index=False)
-
+fact_sales.to_csv('fato_vendas.csv', index=False, decimal=',')
 
 # Fecha conexão
 conn.close()
